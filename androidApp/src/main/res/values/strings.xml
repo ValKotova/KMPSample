@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">game2048</string>
+    <string name = "main_screen_title">2048</string>
+</resources>
