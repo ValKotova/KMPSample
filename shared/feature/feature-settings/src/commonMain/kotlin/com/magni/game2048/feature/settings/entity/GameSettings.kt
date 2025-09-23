@@ -1,5 +1,6 @@
 package com.magni.game2048.feature.settings.entity
 
+import com.magni.game2048.core.domain.entity.Difficulty
 import com.magni.game2048.feature.settings.Theme
 
 data class GameSettings(

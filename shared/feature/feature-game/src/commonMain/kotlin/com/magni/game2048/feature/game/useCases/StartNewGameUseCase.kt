@@ -1,11 +1,12 @@
 package com.magni.game2048.feature.game.useCases
 
-import com.magni.game2048.feature.game.entity.Cell
-import com.magni.game2048.feature.game.entity.Game
-import com.magni.game2048.feature.game.entity.Grid
-import com.magni.game2048.feature.game.entity.Position
+import com.magni.game2048.core.domain.entity.Cell
+import com.magni.game2048.core.domain.entity.Game
+import com.magni.game2048.core.domain.entity.Grid
+import com.magni.game2048.core.domain.entity.MoveResult
+import com.magni.game2048.core.domain.entity.Position
 import com.magni.game2048.feature.settings.repo.SettingsRepository
-import com.magni.game2048.feature.game.repo.GameRepository
+import com.magni.game2048.core.domain.repository.GameRepository
 import kotlin.random.Random
 
 class StartNewGameUseCase(
@@ -14,33 +15,31 @@ class StartNewGameUseCase(
 ) {
     suspend operator fun invoke(): Game {
         val settings = settingsRepository.loadSettings()
-        val grid = createInitialGrid(settings.gridSize)
+        val grid = createEmptyGrid(settings.gridSize)
+        val gridWithTiles = addRandomTile(grid, 2)
         val game = Game(
             id = Random.nextLong().toString(),
             grid = grid,
             score = 0,
-            maxTile = 0,
+            maxTile = 2,
             isGameOver = false,
             difficulty = settings.difficulty
         )
 
         gameRepository.saveGame(game)
         gameRepository.clearMoveHistory()
+        val initialMove = MoveResult(gridWithTiles, 0, emptyList())
+        gameRepository.saveMove(initialMove)
 
         return game
     }
 
-    private fun createInitialGrid(size: Int): Grid {
-        val cells = List(size) { x ->
+    private fun createEmptyGrid(size: Int): Grid {
+        return Grid(size, List(size) { x ->
             List(size) { y ->
                 Cell(Position(x, y), null, Random.nextLong())
             }
-        }
-
-        // Add initial tiles (usually 2)
-        val gridWithInitialTiles = addRandomTile(Grid(size, cells), 2)
-
-        return gridWithInitialTiles
+        })
     }
 
     private fun addRandomTile(grid: Grid, count: Int): Grid {

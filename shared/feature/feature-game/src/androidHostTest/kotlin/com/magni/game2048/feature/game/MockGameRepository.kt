@@ -1,8 +1,8 @@
 package com.magni.game2048.feature.game
 
-import com.magni.game2048.feature.game.entity.Game
-import com.magni.game2048.feature.game.entity.MoveResult
-import com.magni.game2048.feature.game.repo.GameRepository
+import com.magni.game2048.core.domain.entity.Game
+import com.magni.game2048.core.domain.entity.MoveResult
+import com.magni.game2048.core.domain.repository.GameRepository
 
 class MockGameRepository : GameRepository {
     private var currentGame: Game? = null

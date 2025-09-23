@@ -1,8 +1,8 @@
 package com.magni.game2048.feature.game.useCases
 
-import com.magni.game2048.feature.settings.entity.Difficulty
-import com.magni.game2048.feature.game.entity.Grid
-import com.magni.game2048.feature.game.entity.Position
+import com.magni.game2048.core.domain.entity.Difficulty
+import com.magni.game2048.core.domain.entity.Grid
+import com.magni.game2048.core.domain.entity.Position
 
 interface TileGenerator {
     fun generateTile(grid: Grid, difficulty: Difficulty): Pair<Position, Int>?

@@ -1,9 +1,9 @@
 package com.magni.game2048.feature.game.presentation
 
 import androidx.lifecycle.ViewModel
-import com.magni.game2048.feature.game.entity.Animation
-import com.magni.game2048.feature.game.entity.Direction
-import com.magni.game2048.feature.game.entity.Game
+import com.magni.game2048.core.domain.entity.Animation
+import com.magni.game2048.core.domain.entity.Direction
+import com.magni.game2048.core.domain.entity.Game
 import kotlinx.coroutines.flow.StateFlow
 
 class AndroidGameViewModel(

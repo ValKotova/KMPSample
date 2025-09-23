@@ -1,10 +1,10 @@
 package com.magni.game2048.feature.game
 
-import com.magni.game2048.feature.game.entity.Animation
-import com.magni.game2048.feature.game.entity.Cell
-import com.magni.game2048.feature.settings.entity.Difficulty
-import com.magni.game2048.feature.game.entity.Grid
-import com.magni.game2048.feature.game.entity.Position
+import com.magni.game2048.core.domain.entity.Animation
+import com.magni.game2048.core.domain.entity.Cell
+import com.magni.game2048.core.domain.entity.Difficulty
+import com.magni.game2048.core.domain.entity.Grid
+import com.magni.game2048.core.domain.entity.Position
 import com.magni.game2048.feature.game.useCases.TileGenerator
 import org.junit.Assert.assertEquals
 

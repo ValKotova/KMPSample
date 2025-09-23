@@ -3,7 +3,7 @@ kotlin = "2.2.10"
 compose = "1.5.0"
 androidxActivityCompose = "1.10.1"
 composeBom = "2025.08.00"
-realm = "1.15.0"
+realm = "2.3.0"
 koin = "4.1.1"
 coroutines = "1.8.0"
 serialization = "1.7.0"
@@ -18,6 +18,7 @@ kotlinTest = "2.2.10"
 runner = "1.5.2"
 core = "1.5.0"
 compose-multiplatform = "1.8.2"
+icons = "1.7.3"
 
 [libraries]
 # Kotlin
@@ -34,6 +35,7 @@ compose-ui-tooling-preview = { group = "org.jetbrains.compose.ui", name = "ui-to
 compose-foundation = { group = "org.jetbrains.compose.foundation", name = "foundation", version.ref = "compose-multiplatform" }
 compose-material = { group = "org.jetbrains.compose.material", name = "material", version.ref = "compose-multiplatform" }
 compose-material3 = { group = "org.jetbrains.compose.material3", name = "material3", version.ref = "compose-multiplatform" }
+compose-material3-icons-extended = { group = "org.jetbrains.compose.material", name = "material-icons-extended", version.ref = "icons" }
 compose-runtime = { group = "org.jetbrains.compose.runtime", name = "runtime", version.ref = "compose-multiplatform" }
 compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxActivityCompose" }
 

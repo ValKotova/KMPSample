@@ -59,6 +59,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(project(":shared:core:core-domain"))
+                implementation(project(":shared:core:core-database"))
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.coroutines.core)
                 implementation(libs.serialization.json)

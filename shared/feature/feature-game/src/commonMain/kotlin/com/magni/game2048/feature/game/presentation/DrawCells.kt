@@ -7,7 +7,7 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import com.magni.game2048.core.presentation.GameColors
 import com.magni.game2048.feature.game.AnimationLogger
-import com.magni.game2048.feature.game.entity.Grid
+import com.magni.game2048.core.domain.entity.Grid
 
 @Composable
 fun DrawCells(

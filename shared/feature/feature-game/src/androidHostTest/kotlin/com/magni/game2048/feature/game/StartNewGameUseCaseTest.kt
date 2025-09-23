@@ -1,6 +1,6 @@
 package com.magni.game2048.feature.game
 
-import com.magni.game2048.feature.game.entity.MoveResult
+import com.magni.game2048.core.domain.entity.MoveResult
 import com.magni.game2048.feature.game.StartNewGameUseCase
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals

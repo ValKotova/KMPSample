@@ -1,7 +1,7 @@
 package com.magni.game2048.feature.settings.data
 
 import com.magni.game2048.feature.settings.Theme
-import com.magni.game2048.feature.settings.entity.Difficulty
+import com.magni.game2048.core.domain.entity.Difficulty
 import com.magni.game2048.feature.settings.entity.GameSettings
 import com.magni.game2048.feature.settings.repo.SettingsRepository
 

@@ -1,8 +1,8 @@
 package com.magni.game2048.feature.game
 
-import com.magni.game2048.feature.settings.entity.Difficulty
-import com.magni.game2048.feature.game.entity.Game
-import com.magni.game2048.feature.game.entity.MoveResult
+import com.magni.game2048.core.domain.entity.Difficulty
+import com.magni.game2048.core.domain.entity.Game
+import com.magni.game2048.core.domain.entity.MoveResult
 import com.magni.game2048.feature.game.UndoMoveUseCase
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking

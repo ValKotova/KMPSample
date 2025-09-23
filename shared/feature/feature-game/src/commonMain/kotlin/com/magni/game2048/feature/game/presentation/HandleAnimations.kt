@@ -1,24 +1,17 @@
 package com.magni.game2048.feature.game.presentation
 
-import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Easing
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.VectorConverter
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.core.updateTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import com.magni.game2048.feature.game.AnimationLogger
-import com.magni.game2048.feature.game.entity.Animation
-import com.magni.game2048.feature.game.entity.Grid
+import com.magni.game2048.core.domain.entity.Animation
+import com.magni.game2048.core.domain.entity.Grid
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlin.math.pow
 import kotlin.math.sqrt
 

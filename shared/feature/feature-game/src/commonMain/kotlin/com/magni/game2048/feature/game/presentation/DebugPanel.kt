@@ -10,8 +10,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.magni.game2048.feature.game.entity.Animation
-import com.magni.game2048.feature.game.entity.Grid
+import com.magni.game2048.core.domain.entity.Animation
+import com.magni.game2048.core.domain.entity.Grid
 
 @Composable
 fun DebugPanel(

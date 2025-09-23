@@ -11,7 +11,7 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.pointerInput
 import com.magni.game2048.feature.game.AnimationLogger
-import com.magni.game2048.feature.game.entity.Direction
+import com.magni.game2048.core.domain.entity.Direction
 import kotlin.math.abs
 
 

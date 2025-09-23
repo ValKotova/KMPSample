@@ -1,14 +1,14 @@
 package com.magni.game2048.feature.game.useCases
 
 import com.magni.game2048.feature.game.AnimationLogger
-import com.magni.game2048.feature.game.entity.Animation
-import com.magni.game2048.feature.game.entity.Cell
-import com.magni.game2048.feature.game.entity.Direction
-import com.magni.game2048.feature.game.entity.Game
-import com.magni.game2048.feature.game.entity.Grid
-import com.magni.game2048.feature.game.entity.MoveResult
-import com.magni.game2048.feature.game.entity.Position
-import com.magni.game2048.feature.game.repo.GameRepository
+import com.magni.game2048.core.domain.entity.Animation
+import com.magni.game2048.core.domain.entity.Cell
+import com.magni.game2048.core.domain.entity.Direction
+import com.magni.game2048.core.domain.entity.Game
+import com.magni.game2048.core.domain.entity.Grid
+import com.magni.game2048.core.domain.entity.MoveResult
+import com.magni.game2048.core.domain.entity.Position
+import com.magni.game2048.core.domain.repository.GameRepository
 import kotlin.random.Random
 
 class MakeMoveUseCase(

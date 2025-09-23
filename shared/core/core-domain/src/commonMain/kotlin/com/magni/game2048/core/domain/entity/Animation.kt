@@ -1,4 +1,4 @@
-package com.magni.game2048.feature.game.entity
+package com.magni.game2048.core.domain.entity
 
 sealed interface Animation {
     data class Move(

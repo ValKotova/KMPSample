@@ -1,6 +1,6 @@
 package com.magni.game2048.feature.game
 
-import com.magni.game2048.feature.game.entity.Position
+import com.magni.game2048.core.domain.entity.Position
 
 object AnimationLogger {
     private const val ENABLED = true

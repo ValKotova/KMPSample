@@ -1,4 +1,4 @@
-package com.magni.game2048.feature.game.entity
+package com.magni.game2048.core.domain.entity
 
 data class Grid(
     val size: Int,

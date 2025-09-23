@@ -1,50 +1,39 @@
 package com.magni.game2048.feature.game.useCases
 
-import com.magni.game2048.feature.game.entity.Game
-import com.magni.game2048.feature.game.entity.Grid
-import com.magni.game2048.feature.game.repo.GameRepository
+import com.magni.game2048.core.domain.entity.Game
+import com.magni.game2048.core.domain.entity.Grid
+import com.magni.game2048.core.domain.repository.GameRepository
 
-class UndoMoveUseCase(private val gameRepository: GameRepository) {
+class UndoMoveUseCase constructor(
+    private val gameRepository: GameRepository
+) {
     suspend operator fun invoke(currentGame: Game): Game? {
         val moves = gameRepository.getMoveHistory()
-        if (moves.isEmpty()) return null
+        if (moves.size <= 1) return null
 
-        // Get the previous move
-        val previousMove = moves.last()
+        val previousMove = moves[moves.size - 2]
 
-        // Calculate previous state
-        val previousGrid = if (moves.size == 1) {
-            // If only one move, revert to initial state
-            val initialGrid = currentGame.grid.cells.map { row ->
-                row.map { cell ->
-                    cell.copy(value = null)
-                }
-            }
-            Grid(currentGame.grid.size, initialGrid)
-        } else {
-            // Otherwise, use the grid from the previous move
-            moves[moves.size - 2].newGrid
-        }
+        val subsequentMoves = moves.subList(moves.size - 1, moves.size)
+        val scoreToSubtract = subsequentMoves.sumOf { it.scoreDelta }
+        val previousScore = currentGame.score - scoreToSubtract
 
-        // Calculate previous score
-        val previousScore = currentGame.score - previousMove.scoreDelta
-
-        // Update game state
-        val updatedGame = currentGame.copy(
-            grid = previousGrid,
+        // Create the previous game state
+        val previousGame = currentGame.copy(
+            grid = previousMove.newGrid,
             score = previousScore,
-            maxTile = previousGrid.cells.flatten().maxOfOrNull { it.value ?: 0 } ?: 0,
-            isGameOver = CheckGameOverUseCase()(previousGrid)
+            maxTile = previousMove.newGrid.cells.flatten()
+                .maxOfOrNull { it.value ?: 0 } ?: 0,
+            isGameOver = CheckGameOverUseCase()(previousMove.newGrid)
         )
 
-        // Save the updated game
-        gameRepository.saveGame(updatedGame)
+        // Save the updated game state
+        gameRepository.saveGame(previousGame)
 
-        // Remove the last move from history
-        val updatedMoves = moves.dropLast(1)
+        // Remove moves after the undo point
+        val updatedMoves = moves.subList(0, moves.size - 1)
         gameRepository.clearMoveHistory()
         updatedMoves.forEach { gameRepository.saveMove(it) }
 
-        return updatedGame
+        return previousGame
     }
 }

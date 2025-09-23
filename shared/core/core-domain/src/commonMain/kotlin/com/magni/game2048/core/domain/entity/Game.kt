@@ -1,6 +1,4 @@
-package com.magni.game2048.feature.game.entity
-
-import com.magni.game2048.feature.settings.entity.Difficulty
+package com.magni.game2048.core.domain.entity
 
 data class Game(
     val id: String,
