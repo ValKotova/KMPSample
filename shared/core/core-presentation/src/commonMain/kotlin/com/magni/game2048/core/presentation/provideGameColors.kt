@@ -10,9 +10,7 @@ fun provideGameColors(): GameColors {
     val colorScheme = MaterialTheme.colorScheme
     val isDarkTheme = isSystemInDarkTheme()
 
-    // Enhanced tile colors with better contrast and spectrum
     val tileColors = if (isDarkTheme) {
-        // Dark theme - brighter tiles for better contrast
         mapOf(
             1 to Color(0xFF3A3A3A),
             2 to Color(0xFF404040),
@@ -33,7 +31,6 @@ fun provideGameColors(): GameColors {
             65536 to Color(0xFF23375D)
         )
     } else {
-        // Light theme - vibrant but not too bright
         mapOf(
             1 to Color(0xFFEEE4DA),
             2 to Color(0xFFEDE0C8),
