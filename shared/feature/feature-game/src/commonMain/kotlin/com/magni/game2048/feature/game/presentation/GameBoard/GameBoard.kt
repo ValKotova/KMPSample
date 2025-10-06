@@ -75,6 +75,8 @@ fun GameBoard(
             density = LocalDensity.current,
             animationStateHolder = animationStateHolder,
             onAnimationCompleted = {
+                isAnimating = false
+                displayGrid = grid
                 animationStateHolder.clear()
             }
         )

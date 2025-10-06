@@ -10,37 +10,58 @@ fun provideGameColors(): GameColors {
     val colorScheme = MaterialTheme.colorScheme
     val isDarkTheme = isSystemInDarkTheme()
 
-    // Define tile colors for both light and dark themes
-    val tileColors = mapOf(
-        1 to if (isDarkTheme) Color(0xFF454545) else Color(0xFFEEE4DA),
-        2 to if (isDarkTheme) Color(0xFF454545) else Color(0xFFEEE4DA),
-        4 to if (isDarkTheme) Color(0xFF404040) else Color(0xFFEDE0C8),
-        8 to if (isDarkTheme) Color(0xFF4A3C2A) else Color(0xFFF2B179),
-        16 to if (isDarkTheme) Color(0xFF4A3420) else Color(0xFFF59563),
-        32 to if (isDarkTheme) Color(0xFF4A2C1F) else Color(0xFFF67C5F),
-        64 to if (isDarkTheme) Color(0xFF4A241B) else Color(0xFFF65E3B),
-        128 to if (isDarkTheme) Color(0xFF454025) else Color(0xFFEDCF72),
-        256 to if (isDarkTheme) Color(0xFF45401F) else Color(0xFFEDCC61),
-        512 to if (isDarkTheme) Color(0xFF45401A) else Color(0xFFEDC850),
-        1024 to if (isDarkTheme) Color(0xFF454015) else Color(0xFFEDC53F),
-        2048 to if (isDarkTheme) Color(0xFF454010) else Color(0xFFEDC22E)
-    )
+    // Enhanced tile colors with better contrast and spectrum
+    val tileColors = if (isDarkTheme) {
+        // Dark theme - brighter tiles for better contrast
+        mapOf(
+            1 to Color(0xFF3A3A3A),
+            2 to Color(0xFF404040),
+            4 to Color(0xFF4A3726),
+            8 to Color(0xFF4D2E1A),
+            16 to Color(0xFF52321A),
+            32 to Color(0xFF5A2C15),
+            64 to Color(0xFF5D3A1F),
+            128 to Color(0xFF5D4520),
+            256 to Color(0xFF5D4D21),
+            512 to Color(0xFF5D5522),
+            1024 to Color(0xFF5D5D23),
+            2048 to Color(0xFF4A5D23),
+            4096 to Color(0xFF375D23),
+            8192 to Color(0xFF235D4A),
+            16384 to Color(0xFF235D5D),
+            32768 to Color(0xFF234A5D),
+            65536 to Color(0xFF23375D)
+        )
+    } else {
+        // Light theme - vibrant but not too bright
+        mapOf(
+            1 to Color(0xFFEEE4DA),
+            2 to Color(0xFFEDE0C8),
+            4 to Color(0xFFF2B179),
+            8 to Color(0xFFF59563),
+            16 to Color(0xFFF67C5F),
+            32 to Color(0xFFF65E3B),
+            64 to Color(0xFFEDCF72),
+            128 to Color(0xFFEDCC61),
+            256 to Color(0xFFEDC850),
+            512 to Color(0xFFEDC53F),
+            1024 to Color(0xFFEDC22E),
+            2048 to Color(0xFFA7E635),
+            4096 to Color(0xFF63E63B),
+            8192 to Color(0xFF3BE6A7),
+            16384 to Color(0xFF3BC3E6),
+            32768 to Color(0xFF3B7BE6),
+            65536 to Color(0xFF633BE6)
+        )
+    }
 
-    // Define text colors for both light and dark themes
-    val textColors = mapOf(
-        2 to if (isDarkTheme) Color.White else Color(0xFF776E65),
-        2 to if (isDarkTheme) Color.White else Color(0xFF776E65),
-        4 to if (isDarkTheme) Color.White else Color(0xFF776E65),
-        8 to Color.White,
-        16 to Color.White,
-        32 to Color.White,
-        64 to Color.White,
-        128 to Color.White,
-        256 to Color.White,
-        512 to Color.White,
-        1024 to Color.White,
-        2048 to Color.White
-    )
+    val textColors = tileColors.mapValues { (value, tileColor) ->
+        if (isDarkTheme) {
+            if (value <= 64) Color.White else Color.Black
+        } else {
+            if (value <= 4) Color(0xFF776E65) else Color.White
+        }
+    }
 
     return GameColors(
         background = colorScheme.background,
@@ -52,7 +73,7 @@ fun provideGameColors(): GameColors {
         onSecondary = colorScheme.onSecondary,
         surfaceVariant = colorScheme.surfaceVariant,
         onSurfaceVariant = colorScheme.onSurfaceVariant,
-        gridLine = colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+        gridLine = colorScheme.onSurfaceVariant.copy(alpha = 0.3f),
         tileColors = tileColors,
         textColors = textColors
     )
