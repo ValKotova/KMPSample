@@ -12,6 +12,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.pointerInput
 import com.magni.game2048.feature.game.AnimationLogger
 import com.magni.game2048.core.domain.entity.Direction
+import com.magni.game2048.feature.game.presentation.GameBoard.toDomain
 import kotlin.math.abs
 
 
@@ -33,23 +34,19 @@ fun Modifier.swipeable(onSwipe: (Direction) -> Unit): Modifier = composed {
                     val deltaX = current.x - startPos.x
                     val deltaY = current.y - startPos.y
 
-                    // Check if it's a valid swipe (minimum distance)
-                    val minSwipeDistance = 20f // Adjust as needed
+                    val minSwipeDistance = 20f
 
                     if (abs(deltaX) > minSwipeDistance || abs(deltaY) > minSwipeDistance) {
-                        // Determine primary direction
                         if (abs(deltaX) > abs(deltaY)) {
-                            // Horizontal swipe
                             val direction = if (deltaX > 0) Direction.RIGHT else Direction.LEFT
                             AnimationLogger.log(message = "Horizontal swipe: $direction (deltaX: $deltaX)")
                             onSwipe(direction.toDomain())
                         } else {
-                            // Vertical swipe
                             val direction = if (deltaY > 0) Direction.DOWN else Direction.UP
                             AnimationLogger.log(message = "Vertical swipe: $direction (deltaY: $deltaY)")
                             onSwipe(direction.toDomain())
                         }
-                        start = null // Reset after handling
+                        start = null
                     }
                 }
             } while (event.changes.any { it.pressed })

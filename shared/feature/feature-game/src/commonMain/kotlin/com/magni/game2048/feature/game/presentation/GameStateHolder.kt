@@ -1,10 +1,10 @@
 package com.magni.game2048.feature.game.presentation
 
 import com.magni.game2048.core.domain.entity.Animation
+import com.magni.game2048.core.domain.entity.AppSettings
 import com.magni.game2048.core.domain.entity.Direction
 import com.magni.game2048.core.domain.entity.Game
-import com.magni.game2048.feature.game.common.Navigator
-import com.magni.game2048.feature.game.common.Screen
+import com.magni.game2048.core.domain.useCase.GetSettingsFlowUseCase
 import com.magni.game2048.feature.game.useCases.CheckGameOverUseCase
 import com.magni.game2048.feature.game.useCases.GetGameStateUseCase
 import com.magni.game2048.feature.game.useCases.MakeMoveUseCase
@@ -24,13 +24,15 @@ class GameStateHolder(
     private val startNewGameUseCase: StartNewGameUseCase,
     private val undoMoveUseCase: UndoMoveUseCase,
     private val getGameStateUseCase: GetGameStateUseCase,
-    val navigator: Navigator
+    private val getSettingsFlowUseCase: GetSettingsFlowUseCase
 ) {
     private val _gameState = MutableStateFlow<Game?>(null)
     val gameState: StateFlow<Game?> = _gameState.asStateFlow()
 
     private val _animations = MutableStateFlow<List<Animation>>(emptyList())
     val animations: StateFlow<List<Animation>> = _animations.asStateFlow()
+
+    val currentSettings: StateFlow<AppSettings> = getSettingsFlowUseCase()
 
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
@@ -41,9 +43,10 @@ class GameStateHolder(
     fun makeMove(direction: Direction) {
         coroutineScope.launch {
             val currentGame = _gameState.value ?: return@launch
+
             val moveResult = makeMoveUseCase(currentGame, direction)
 
-            _gameState.value = currentGame.copy(
+            val newGameState = currentGame.copy(
                 grid = moveResult.newGrid,
                 score = currentGame.score + moveResult.scoreDelta,
                 maxTile = maxOf(currentGame.maxTile, moveResult.newGrid.cells.flatten()
@@ -51,6 +54,7 @@ class GameStateHolder(
                 isGameOver = CheckGameOverUseCase()(moveResult.newGrid)
             )
 
+            _gameState.value = newGameState
             _animations.value = moveResult.animations
         }
     }
@@ -66,6 +70,7 @@ class GameStateHolder(
     fun undoMove() {
         coroutineScope.launch {
             val currentGame = _gameState.value ?: return@launch
+
             val previousGame = undoMoveUseCase(currentGame)
             if (previousGame != null) {
                 _gameState.value = previousGame
@@ -84,15 +89,11 @@ class GameStateHolder(
         }
     }
 
-    fun navigateTo(screen: Screen) {
-        navigator.navigateTo(screen)
-    }
-
-    fun navigateBack() {
-        navigator.navigateBack()
-    }
-
     fun clear() {
         coroutineScope.cancel()
+    }
+
+    fun clearAnimations() {
+        _animations.value = emptyList()
     }
 }

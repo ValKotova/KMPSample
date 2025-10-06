@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
+    alias(libs.plugins.jetbrains.compose)
+    alias(libs.plugins.compose.compiler)
 }
 
 kotlin {
@@ -20,6 +22,12 @@ kotlin {
             sourceSetTreeName = "test"
         }.configure {
             instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        }
+    }
+
+    jvm("desktop") {
+        compilations.all {
+            kotlinOptions.jvmTarget = "17"
         }
     }
 
@@ -61,8 +69,16 @@ kotlin {
                 implementation(project(":shared:core:core-domain"))
                 implementation(project(":shared:core:core-data"))
                 implementation(project(":shared:core:core-database"))
+                implementation(project(":shared:core:core-presentation"))
+                implementation(project(":shared:feature:feature-settings"))
                 implementation(libs.kotlin.stdlib)
+                implementation(libs.koin.core)
                 implementation(libs.coroutines.core)
+                implementation(libs.compose.runtime)
+                implementation(libs.compose.foundation)
+                implementation(libs.compose.material3)
+                implementation(libs.compose.material3.icons.extended)
+                implementation(libs.compose.ui)
             }
         }
 
@@ -74,9 +90,16 @@ kotlin {
 
         androidMain {
             dependencies {
-                // Add Android-specific dependencies here. Note that this source set depends on
-                // commonMain by default and will correctly pull the Android artifacts of any KMP
-                // dependencies declared in commonMain.
+                implementation(libs.kotlin.stdlib)
+                implementation(libs.koin.android)
+                implementation(libs.koin.androidx.compose)
+                implementation(libs.coroutines.android)
+            }
+        }
+
+        val desktopMain by getting {
+            dependencies {
+                implementation(compose.desktop.currentOs)
             }
         }
 

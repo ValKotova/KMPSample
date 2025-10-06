@@ -1,24 +1,28 @@
 [versions]
-kotlin = "2.2.10"
+kotlin = "2.0.20"
 compose = "1.5.0"
 androidxActivityCompose = "1.10.1"
 composeBom = "2025.08.00"
-realm = "2.3.0"
+realm = "3.0.0"
 koin = "4.1.1"
 coroutines = "1.8.0"
 serialization = "1.7.0"
 androidxCore = "1.13.1"
 androidxLifecycle = "2.8.4"
-jetbrainsKotlinJvm = "2.2.10"
+jetbrainsKotlinJvm = "2.0.20"
 androidGradlePlugin = "8.11.0"
 junit = "4.13.2"
 androidxTestExtJunit = "1.1.5"
 androidxTestEspressoCore = "3.5.1"
-kotlinTest = "2.2.10"
+kotlinTest = "2.0.20"
 runner = "1.5.2"
 core = "1.5.0"
 compose-multiplatform = "1.8.2"
 icons = "1.7.3"
+voyager = "1.0.0"
+appcompat = "1.7.1"
+material = "1.13.0"
+uiDesktop = "1.7.0"
 
 [libraries]
 # Kotlin
@@ -27,6 +31,7 @@ kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", versio
 # Coroutines
 coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+coroutines-desktop = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "coroutines" }
 
 # Compose BOM and libraries
 compose-ui = { group = "org.jetbrains.compose.ui", name = "ui", version.ref = "compose-multiplatform" }

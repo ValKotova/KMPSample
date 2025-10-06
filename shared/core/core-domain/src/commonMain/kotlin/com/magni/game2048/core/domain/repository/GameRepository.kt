@@ -6,8 +6,11 @@ import com.magni.game2048.core.domain.entity.MoveResult
 interface GameRepository {
     suspend fun saveGame(game: Game)
     suspend fun loadGame(): Game?
-    suspend fun getMoveHistory(): List<MoveResult>
-    suspend fun saveMove(move: MoveResult)
-    suspend fun clearMoveHistory()
+    suspend fun saveGameToHistory(game: Game)
+    suspend fun getPreviousGameState(): Game?
+    suspend fun removeLastGameFromHistory()
+    suspend fun clearGameHistory()
+    suspend fun clearAllData()
+    suspend fun getHistorySize(): Int
     fun close()
 }

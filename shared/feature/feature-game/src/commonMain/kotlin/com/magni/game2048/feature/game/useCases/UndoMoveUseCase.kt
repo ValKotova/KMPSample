@@ -4,35 +4,22 @@ import com.magni.game2048.core.domain.entity.Game
 import com.magni.game2048.core.domain.entity.Grid
 import com.magni.game2048.core.domain.repository.GameRepository
 
-class UndoMoveUseCase constructor(
+class UndoMoveUseCase(
     private val gameRepository: GameRepository
 ) {
     suspend operator fun invoke(currentGame: Game): Game? {
-        val moves = gameRepository.getMoveHistory()
-        if (moves.size <= 1) return null
 
-        val previousMove = moves[moves.size - 2]
+        // Get the last saved state from history (this is the state BEFORE the new tile was added)
+        val previousGame = gameRepository.getPreviousGameState()
+        if (previousGame == null) {
+            return null
+        }
 
-        val subsequentMoves = moves.subList(moves.size - 1, moves.size)
-        val scoreToSubtract = subsequentMoves.sumOf { it.scoreDelta }
-        val previousScore = currentGame.score - scoreToSubtract
-
-        // Create the previous game state
-        val previousGame = currentGame.copy(
-            grid = previousMove.newGrid,
-            score = previousScore,
-            maxTile = previousMove.newGrid.cells.flatten()
-                .maxOfOrNull { it.value ?: 0 } ?: 0,
-            isGameOver = CheckGameOverUseCase()(previousMove.newGrid)
-        )
-
-        // Save the updated game state
+        // Save the previous state as current
         gameRepository.saveGame(previousGame)
 
-        // Remove moves after the undo point
-        val updatedMoves = moves.subList(0, moves.size - 1)
-        gameRepository.clearMoveHistory()
-        updatedMoves.forEach { gameRepository.saveMove(it) }
+        // Remove the state we just used from history
+        gameRepository.removeLastGameFromHistory()
 
         return previousGame
     }

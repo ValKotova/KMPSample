@@ -25,6 +25,12 @@ kotlin {
         }
     }
 
+    jvm("desktop") {
+        compilations.all {
+            kotlinOptions.jvmTarget = "17"
+        }
+    }
+
     // For iOS targets, this is also where you should
     // configure native binary output. For more information, see:
     // https://kotlinlang.org/docs/multiplatform-build-native-binaries.html#build-xcframeworks
@@ -60,6 +66,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                implementation(project(":shared:core:core-domain"))
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.koin.core)
                 implementation(libs.coroutines.core)
@@ -84,6 +91,12 @@ kotlin {
             }
         }
 
+        val desktopMain by getting {
+            dependencies {
+                implementation(compose.desktop.currentOs)
+            }
+        }
+
         getByName("androidDeviceTest") {
             dependencies {
                 implementation(libs.androidx.runner)
@@ -92,7 +105,7 @@ kotlin {
             }
         }
 
-        iosMain {
+        /*iosMain {
             dependencies {
                 // Add iOS-specific dependencies here. This a source set created by Kotlin Gradle
                 // Plugin (KGP) that each specific iOS target (e.g., iosX64) depends on as
@@ -100,7 +113,7 @@ kotlin {
                 // on common by default and will correctly pull the iOS artifacts of any
                 // KMP dependencies declared in commonMain.
             }
-        }
+        }*/
     }
 
 }

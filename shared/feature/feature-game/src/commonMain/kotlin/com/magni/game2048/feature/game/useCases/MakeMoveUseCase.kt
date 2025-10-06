@@ -16,24 +16,13 @@ class MakeMoveUseCase(
     private val tileGenerator: TileGenerator
 ) {
     suspend operator fun invoke(game: Game, direction: Direction): MoveResult {
-        AnimationLogger.log(message = "Processing move in direction: $direction")
-        AnimationLogger.log(message = "Original grid: ${formatGridForLog(game.grid)}")
+        gameRepository.saveGameToHistory(game)
 
-        // Rotate grid to make the direction always "left" for processing
         val (rotatedGrid, rotationCount) = rotateGridForDirection(game.grid, direction)
-        AnimationLogger.log(message = "Rotated grid (rotationCount: $rotationCount): ${formatGridForLog(rotatedGrid)}")
-
-        // Process the move as if it were a left move
         val (processedGrid, scoreDelta, animations) = processLeftMove(rotatedGrid)
-        AnimationLogger.log(message = "Processed grid after left move: ${formatGridForLog(processedGrid)}")
-        AnimationLogger.log(message = "Animations from left move: $animations")
 
-        // Rotate the grid and animations back to the original orientation
         val (finalGrid, adjustedAnimations) = rotateBack(processedGrid, animations, direction, rotationCount)
-        AnimationLogger.log(message = "Final grid after rotation: ${formatGridForLog(finalGrid)}")
-        AnimationLogger.log(message = "Adjusted animations: $adjustedAnimations")
 
-        // Add new tile if move was successful using the tileGenerator
         val gridWithNewTile = if (adjustedAnimations.isNotEmpty()) {
             tileGenerator.generateTile(finalGrid, game.difficulty)?.let { (position, value) ->
                 val newCell = Cell(position, value, Random.nextLong())
@@ -50,7 +39,15 @@ class MakeMoveUseCase(
         }
 
         val moveResult = MoveResult(gridWithNewTile, scoreDelta, adjustedAnimations)
-        AnimationLogger.log(message = "Final move result: ${moveResult.animations}")
+
+        val finalGameState = game.copy(
+            grid = gridWithNewTile,
+            score = game.score + scoreDelta,
+            maxTile = maxOf(game.maxTile, gridWithNewTile.cells.flatten().maxOfOrNull { it.value ?: 0 } ?: 0),
+            isGameOver = CheckGameOverUseCase()(gridWithNewTile)
+        )
+
+        gameRepository.saveGame(finalGameState)
 
         return moveResult
     }
@@ -84,9 +81,6 @@ class MakeMoveUseCase(
         val inverseRotation = (4 - rotationCount) % 4
         val adjustedAnimations = animations.map { adjustAnimationForRotation(it, inverseRotation, grid.size) }.toMutableList()
 
-        AnimationLogger.log(message = "Inverse rotation for animations: $inverseRotation")
-        AnimationLogger.log(message = "Rotated grid size: ${grid.size}")
-
         return Pair(rotatedGrid, adjustedAnimations)
     }
 
@@ -111,8 +105,6 @@ class MakeMoveUseCase(
 
     private fun adjustAnimationForRotation(animation: Animation, rotationCount: Int, size: Int): Animation {
         if (rotationCount == 0) return animation
-
-        AnimationLogger.log(message = "Adjusting animation: $animation with rotationCount: $rotationCount")
 
         return when (animation) {
             is Animation.Move -> {
@@ -147,7 +139,6 @@ class MakeMoveUseCase(
         // Rotate 90 degrees clockwise: (x, y) -> (y, size-1-x)
         val newX = position.y
         val newY = size - 1 - position.x
-        AnimationLogger.log(message = "Rotating position: $position -> ($newX, $newY)")
         return Position(newX, newY)
     }
 

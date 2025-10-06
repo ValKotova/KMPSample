@@ -19,9 +19,9 @@ class RandomTileGenerator : TileGenerator {
 
         val position = emptyCells.random()
         val value = when (difficulty) {
-            Difficulty.EASY -> listOf(2, 4).random()
-            Difficulty.MEDIUM -> listOf(2, 4, 8).random()
-            Difficulty.HARD -> listOf(2, 4, 8, 16).random()
+            Difficulty.EASY -> listOf(1, 2).random()
+            Difficulty.MEDIUM -> listOf(1, 2, 4).random()
+            Difficulty.HARD -> listOf(1, 2, 4, 8, 16).random()
         }
         return position to value
     }

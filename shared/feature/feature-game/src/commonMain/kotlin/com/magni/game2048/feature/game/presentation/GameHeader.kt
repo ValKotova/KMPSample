@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.magni.game2048.core.domain.entity.Game
 
 @Composable
-fun GameHeader(gameState: Game?) {
+fun GameHeader(gameState: Game) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -19,7 +19,7 @@ fun GameHeader(gameState: Game?) {
     ) {
         ScoreCard(
             title = "Score",
-            value = gameState?.score ?: 0
+            value = gameState.score
         )
         ScoreCard(
             title = "Best",
@@ -27,7 +27,7 @@ fun GameHeader(gameState: Game?) {
         )
         ScoreCard(
             title = "Max Tile",
-            value = gameState?.maxTile ?: 0
+            value = gameState.maxTile
         )
     }
 }

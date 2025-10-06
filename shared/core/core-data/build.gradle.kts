@@ -23,6 +23,12 @@ kotlin {
         }
     }
 
+    jvm("desktop") {
+        compilations.all {
+            kotlinOptions.jvmTarget = "17"
+        }
+    }
+
     // For iOS targets, this is also where you should
     // configure native binary output. For more information, see:
     // https://kotlinlang.org/docs/multiplatform-build-native-binaries.html#build-xcframeworks
@@ -84,6 +90,11 @@ kotlin {
                 implementation(libs.androidx.runner)
                 implementation(libs.androidx.core)
                 implementation(libs.androidx.test.ext.junit)
+            }
+        }
+
+        val desktopMain by getting {
+            dependencies {
             }
         }
 

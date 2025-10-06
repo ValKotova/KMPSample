@@ -2,19 +2,17 @@ package com.magni.game2048.core.database
 
 import com.magni.game2048.core.database.entity.RealmCell
 import com.magni.game2048.core.database.entity.RealmGame
+import com.magni.game2048.core.database.entity.RealmGameHistory
 import com.magni.game2048.core.database.entity.RealmGrid
-import com.magni.game2048.core.database.entity.RealmMoveResult
+import com.magni.game2048.core.database.entity.RealmRecord
+import com.magni.game2048.core.database.entity.RealmSettings
 import io.realm.kotlin.MutableRealm
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
-import javax.naming.Context
 
 object RealmManager {
     private var realm: Realm? = null
-    private val scope = CoroutineScope(Dispatchers.Default)
 
     fun getRealm(): Realm {
         if (realm != null || realm?.isClosed() == true) {
@@ -27,9 +25,12 @@ object RealmManager {
                             RealmGame::class,
                             RealmGrid::class,
                             RealmCell::class,
-                            RealmMoveResult::class
+                            RealmGameHistory::class,
+                            RealmSettings::class,
+                            RealmRecord::class
                         )
-                    ).build()
+                    ).schemaVersion(1)
+                        .build()
                 )
             }
             return realm!!

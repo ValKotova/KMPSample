@@ -1,6 +1,7 @@
 package com.magni.game2048
 
 import android.app.Application
+import com.magni.game2048.di.androidAppModule
 import com.magni.game2048.di.androidViewModelModule
 import com.magni.game2048.di.appModule
 import org.koin.android.ext.koin.androidContext
@@ -12,7 +13,7 @@ class Game2048App: Application() {
 
         startKoin {
             androidContext(this@Game2048App)
-            modules(appModule + androidViewModelModule)
+            modules(appModule + androidAppModule)
         }
     }
 }

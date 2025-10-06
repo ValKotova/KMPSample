@@ -14,7 +14,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun GameBottomBar(gameStateHolder: GameStateHolder) {
+fun GameBottomBar(
+    gameStateHolder: GameStateHolder
+) {
+
     BottomAppBar {
         IconButton(
             onClick = { gameStateHolder.undoMove() },
