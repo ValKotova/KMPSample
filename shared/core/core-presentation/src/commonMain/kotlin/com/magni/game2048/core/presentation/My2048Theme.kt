@@ -32,7 +32,6 @@ fun My2048Theme(
     )
 }
 
-// Update your color schemes to be more consistent
 private val LightColorScheme = lightColorScheme(
     primary = Color(0xFF6200EE),
     onPrimary = Color(0xFFFFFFFF),
@@ -42,7 +41,7 @@ private val LightColorScheme = lightColorScheme(
     onSecondary = Color(0xFF000000),
     secondaryContainer = Color(0xFF018786),
     onSecondaryContainer = Color(0xFFFFFFFF),
-    background = Color(0xFFF8F5F0), // Light beige background
+    background = Color(0xFFF8F5F0),
     onBackground = Color(0xFF1C1B1F),
     surface = Color(0xFFFFFBFE),
     onSurface = Color(0xFF1C1B1F),
@@ -67,7 +66,6 @@ private val DarkColorScheme = darkColorScheme(
     onSurfaceVariant = Color(0xFFCAC4D0)
 )
 
-// Typography with Material 3 structure
 val Typography = Typography(
     displayLarge = TextStyle(
         fontFamily = FontFamily.Default,

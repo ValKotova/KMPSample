@@ -12,51 +12,57 @@ fun provideGameColors(): GameColors {
 
     val tileColors = if (isDarkTheme) {
         mapOf(
-            1 to Color(0xFF3A3A3A),
-            2 to Color(0xFF404040),
-            4 to Color(0xFF4A3726),
-            8 to Color(0xFF4D2E1A),
-            16 to Color(0xFF52321A),
-            32 to Color(0xFF5A2C15),
-            64 to Color(0xFF5D3A1F),
-            128 to Color(0xFF5D4520),
-            256 to Color(0xFF5D4D21),
-            512 to Color(0xFF5D5522),
-            1024 to Color(0xFF5D5D23),
-            2048 to Color(0xFF4A5D23),
-            4096 to Color(0xFF375D23),
-            8192 to Color(0xFF235D4A),
-            16384 to Color(0xFF235D5D),
-            32768 to Color(0xFF234A5D),
-            65536 to Color(0xFF23375D)
+            2 to Color(0xFFF44336),     // Bright Red
+            4 to Color(0xFFE91E63),     // Pink
+            8 to Color(0xFF9C27B0),     // Purple
+            16 to Color(0xFF673AB7),    // Deep Purple
+            32 to Color(0xFF3F51B5),    // Indigo
+            64 to Color(0xFF2196F3),    // Blue
+            128 to Color(0xFF03A9F4),   // Light Blue
+            256 to Color(0xFF00BCD4),   // Cyan
+            512 to Color(0xFF009688),   // Teal
+            1024 to Color(0xFF4CAF50),  // Green
+            2048 to Color(0xFF8BC34A),  // Light Green
+            4096 to Color(0xFFCDDC39),  // Lime
+            8192 to Color(0xFFFFEB3B),  // Yellow
+            16384 to Color(0xFFFFC107), // Amber
+            32768 to Color(0xFFFF9800), // Orange
+            65536 to Color(0xFFFF5722)  // Deep Orange
         )
     } else {
         mapOf(
-            1 to Color(0xFFEEE4DA),
-            2 to Color(0xFFEDE0C8),
-            4 to Color(0xFFF2B179),
-            8 to Color(0xFFF59563),
-            16 to Color(0xFFF67C5F),
-            32 to Color(0xFFF65E3B),
-            64 to Color(0xFFEDCF72),
-            128 to Color(0xFFEDCC61),
-            256 to Color(0xFFEDC850),
-            512 to Color(0xFFEDC53F),
-            1024 to Color(0xFFEDC22E),
-            2048 to Color(0xFFA7E635),
-            4096 to Color(0xFF63E63B),
-            8192 to Color(0xFF3BE6A7),
-            16384 to Color(0xFF3BC3E6),
-            32768 to Color(0xFF3B7BE6),
-            65536 to Color(0xFF633BE6)
+            2 to Color(0xFFD32F2F),     // Vibrant Red
+            4 to Color(0xFFC2185B),     // Vibrant Pink
+            8 to Color(0xFF7B1FA2),     // Vibrant Purple
+            16 to Color(0xFF512DA8),    // Vibrant Deep Purple
+            32 to Color(0xFF303F9F),    // Vibrant Indigo
+            64 to Color(0xFF1976D2),    // Vibrant Blue
+            128 to Color(0xFF0288D1),   // Vibrant Light Blue
+            256 to Color(0xFF0097A7),   // Vibrant Cyan
+            512 to Color(0xFF00796B),   // Vibrant Teal
+            1024 to Color(0xFF388E3C),  // Vibrant Green
+            2048 to Color(0xFF689F38),  // Vibrant Light Green
+            4096 to Color(0xFFAFB42B),  // Vibrant Lime
+            8192 to Color(0xFFFBC02D),  // Vibrant Yellow
+            16384 to Color(0xFFFFA000), // Vibrant Amber
+            32768 to Color(0xFFF57C00), // Vibrant Orange
+            65536 to Color(0xFFE64A19)  // Vibrant Deep Orange
         )
     }
 
     val textColors = tileColors.mapValues { (value, tileColor) ->
         if (isDarkTheme) {
-            if (value <= 64) Color.White else Color.Black
+            when (value) {
+                in 2..128 -> Color.White
+                in 256..1024 -> Color.White
+                else -> Color.Black
+            }
         } else {
-            if (value <= 4) Color(0xFF776E65) else Color.White
+            when (value) {
+                in 2..512 -> Color.White
+                in 1024..4096 -> Color.White
+                else -> Color.Black
+            }
         }
     }
 
@@ -73,5 +79,23 @@ fun provideGameColors(): GameColors {
         gridLine = colorScheme.onSurfaceVariant.copy(alpha = 0.3f),
         tileColors = tileColors,
         textColors = textColors
+    )
+}
+
+fun Color.lighten(factor: Float): Color {
+    return Color(
+        red = (red + (1f - red) * factor).coerceIn(0f, 1f),
+        green = (green + (1f - green) * factor).coerceIn(0f, 1f),
+        blue = (blue + (1f - blue) * factor).coerceIn(0f, 1f),
+        alpha = alpha
+    )
+}
+
+fun Color.darken(factor: Float): Color {
+    return Color(
+        red = (red * (1f - factor)).coerceIn(0f, 1f),
+        green = (green * (1f - factor)).coerceIn(0f, 1f),
+        blue = (blue * (1f - factor)).coerceIn(0f, 1f),
+        alpha = alpha
     )
 }

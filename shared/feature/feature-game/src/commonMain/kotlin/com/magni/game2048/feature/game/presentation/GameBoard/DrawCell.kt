@@ -52,15 +52,13 @@ fun DrawCell(
             }
             .padding(cellPadding)
     ) {
-        Box(
+        VolumetricCircle(
+            baseColor = gameColors.tileColors[cell.value] ?: gameColors.primary,
             modifier = Modifier
                 .fillMaxSize()
-                .background(
-                    color = gameColors.tileColors[cell.value] ?: gameColors.primary,
-                    shape = CircleShape
-                )
                 .align(Alignment.Center)
-        ) {
+        )
+        {
             Text(
                 text = cell.value.toString(),
                 color = gameColors.textColors[cell.value] ?: gameColors.onPrimary,
